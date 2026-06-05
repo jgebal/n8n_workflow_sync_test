@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-05T11:29:58.408Z",
+  "updatedAt": "2026-06-05T13:52:14.393Z",
   "createdAt": "2026-06-05T06:59:59.461Z",
   "id": "JNagB4puYNM4C6aQ",
   "name": "github_repo_workflows_sync",
@@ -323,8 +323,7 @@
     },
     {
       "parameters": {
-        "language": "python",
-        "pythonCode": "# Get the desired workflow name\nworkflow_id = _('If n8n before GitHub').first().json['same']['id']\n\n# Get all decoded workflow items\nall_decoded = _('n8n').all()\n\n# Filter for the matching one\nmatched = [\n    item.json \n    for item in all_decoded \n    if item.json.get('id') == workflow_id\n]\n\n# If there's a match, return it (or empty if none)\nif matched:\n    return [{'json': {'dataset': matched[0]}}]\nelse:\n    return []\n"
+        "jsCode": "const workflow_id = $('If n8n before GitHub').first().json.same.id;\n\nconst all_decoded = $('Get a workflow version').all();\n\nconst matched = all_decoded.filter(item => item.json.id === workflow_id);\n\nif (matched.length > 0) {\n  return [{ json: { dataset: matched[0].json } }];\n} else {\n  return [];\n}"
       },
       "id": "e6c15620-12f2-42da-a0e1-a3424428010e",
       "name": "Code - InputA",
@@ -448,7 +447,6 @@
             "typeValidation": "strict",
             "version": 2
           },
-          "combinator": "and",
           "conditions": [
             {
               "id": "8ccf743b-3a66-44c0-a30b-72a1d4bcf60b",
@@ -459,7 +457,8 @@
               "leftValue": "={{ $json.different.updatedAt.inputA }}",
               "rightValue": "={{ $json.different.updatedAt.inputB }}"
             }
-          ]
+          ],
+          "combinator": "and"
         },
         "options": {}
       },
@@ -528,19 +527,19 @@
               "id": "850e7497-0f2f-470e-a5a2-a85a0c12aaa2",
               "name": "github_account_name",
               "type": "string",
-              "value": "={{ $json.data.github_account_name }}"
+              "value": "={{ $json.github_account_name }}"
             },
             {
               "id": "5c2be15a-cb93-4fe4-a512-03a1880b8713",
               "name": "github_repo_name",
               "type": "string",
-              "value": "={{ $json.data.github_repo_name }}"
+              "value": "={{ $json.github_repo_name }}"
             },
             {
               "id": "f4f1f0c3-7a89-427c-942f-d0e74ba4583f",
               "name": "repo_workflows_path",
               "type": "string",
-              "value": "={{ $json.data.repo_workflows_path }}"
+              "value": "={{ $json.repo_workflows_path }}"
             }
           ]
         },
@@ -562,7 +561,7 @@
           "value": "zyVp53gZcsQvjbDu",
           "mode": "list",
           "cachedResultUrl": "/workflow/zyVp53gZcsQvjbDu",
-          "cachedResultName": "WF-config"
+          "cachedResultName": "get-config"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -864,7 +863,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "23f58b7b-80dc-4aca-9f09-f073a9b8efe7",
+  "versionId": "5890fc92-cfd6-4fd8-bfc1-ff5652fe5b07",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [

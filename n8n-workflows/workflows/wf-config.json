@@ -1,0 +1,107 @@
+{
+  "updatedAt": "2026-06-05T10:52:02.708Z",
+  "createdAt": "2026-06-05T08:24:05.986Z",
+  "id": "zyVp53gZcsQvjbDu",
+  "name": "WF-config",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "CustomerName"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b37e037f-eb8b-4271-9856-bf13d2b33b1b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "fileSelector": "=/home/node/.n8n-files/workflow-configs/{{$json.CustomerName}}.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "280722dd-6309-4822-8b10-91fa01130706",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "300f0db1-3a07-497e-9441-1eb82bd9d599",
+      "name": "Extract from File"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "81941c28-067f-40ae-afc4-6660645117b5",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-06-05T08:24:05.986Z",
+      "createdAt": "2026-06-05T08:24:05.986Z",
+      "role": "workflow:owner",
+      "workflowId": "zyVp53gZcsQvjbDu",
+      "projectId": "n7vWRCER8LLsWmld"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}

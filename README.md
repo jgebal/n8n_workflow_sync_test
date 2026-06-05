@@ -1,0 +1,1 @@
+Demo repository for working with N8N workflows and git synchronization.

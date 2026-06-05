@@ -1,0 +1,526 @@
+{
+  "updatedAt": "2026-06-05T13:22:03.386Z",
+  "createdAt": "2026-06-05T12:24:03.270Z",
+  "id": "FjzDZrcWwKC3x4zj",
+  "name": "config-import",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list"
+        },
+        "table": {
+          "__rl": true,
+          "value": "config_parameters",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "config_set": "={{ $json.config_set }}",
+            "config_key": "={{ $json.config_key }}",
+            "config_value": "={{ $json.config_value }}",
+            "updated_at": "={{ $json.updated_at }}"
+          },
+          "matchingColumns": [
+            "config_set",
+            "config_key"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "config_set",
+              "displayName": "config_set",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "config_key",
+              "displayName": "config_key",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "config_value",
+              "displayName": "config_value",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "785be2c6-af3c-4318-a776-63f9b347f2f5",
+      "name": "Upsert to PostgreSQL",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        1200,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "9qhK76P6xoSLgyrj",
+          "name": "Postgres account"
+        }
+      },
+      "notes": "Upserts rows using (config_set, config_key) as the unique conflict key. Replace with MySQL node if needed."
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "list",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.github_account_name }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.github_repo_name }}"
+        },
+        "filePath": "=/{{ $json.repo_configs_path }}"
+      },
+      "id": "b1d8a1e9-fd5b-4c75-82c7-cef45afd1978",
+      "name": "List files from repo",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        -128,
+        416
+      ],
+      "webhookId": "0614066f-212d-4f9e-9da2-fa4a80b44baf",
+      "typeVersion": 1,
+      "alwaysOutputData": true,
+      "credentials": {
+        "githubApi": {
+          "id": "xyTmQosfDecDMXud",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Set GitHub Details').item.json.github_account_name }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Set GitHub Details').item.json.github_repo_name }}"
+        },
+        "filePath": "={{ $json.path }}",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "id": "44b6aa61-c2f8-4a84-a0e3-8e9eedc81ae6",
+      "name": "GitHub",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        256,
+        416
+      ],
+      "webhookId": "71ad7d84-99cd-4fbd-a365-52537e69525b",
+      "typeVersion": 1.1,
+      "credentials": {
+        "githubApi": {
+          "id": "xyTmQosfDecDMXud",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b9ed0bad-4ebe-4378-807e-1a6082c4461d",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              },
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "json"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "413de343-383b-4448-b8a1-c8d09f07af56",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        64,
+        416
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "850e7497-0f2f-470e-a5a2-a85a0c12aaa2",
+              "name": "github_account_name",
+              "type": "string",
+              "value": "={{ $json.data.github_account_name }}"
+            },
+            {
+              "id": "5c2be15a-cb93-4fe4-a512-03a1880b8713",
+              "name": "github_repo_name",
+              "type": "string",
+              "value": "={{ $json.data.github_repo_name }}"
+            },
+            {
+              "id": "f4f1f0c3-7a89-427c-942f-d0e74ba4583f",
+              "name": "repo_workflows_path",
+              "type": "string",
+              "value": "={{ $json.data.repo_workflows_path }}"
+            },
+            {
+              "id": "e16a5c69-d59f-4ad5-b293-2451e3af482f",
+              "name": "repo_configs_path",
+              "value": "={{ $json.data.repo_configs_path }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2738968d-2623-411e-8837-247ad1127650",
+      "name": "Set GitHub Details",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -320,
+        416
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "zyVp53gZcsQvjbDu",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/zyVp53gZcsQvjbDu",
+          "cachedResultName": "WF-config"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CustomerName": "_workflow_sync"
+          },
+          "matchingColumns": [
+            "CustomerName"
+          ],
+          "schema": [
+            {
+              "id": "CustomerName",
+              "displayName": "CustomerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -512,
+        416
+      ],
+      "id": "8cf80d34-96e5-428d-a289-29723cf8efaa",
+      "name": "Call 'WF-config'"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ]
+            }
+          ]
+        }
+      },
+      "id": "eac52915-cb8d-4c29-8165-3921dbb3e6e6",
+      "name": "Schedule Trigger1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -720,
+        416
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{  $json.content.base64Decode() }}",
+        "includeOtherFields": true,
+        "include": "selected",
+        "includeFields": "name",
+        "options": {}
+      },
+      "id": "ce783773-bb25-4f15-936f-35170aff3793",
+      "name": "Decode to json",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        448,
+        416
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE TABLE IF NOT EXISTS config_parameters (\n  id           SERIAL PRIMARY KEY,\n  config_set   TEXT        NOT NULL,\n  config_key   TEXT        NOT NULL,\n  config_value TEXT        NOT NULL,\n  updated_at   TIMESTAMPTZ NOT NULL,\n  UNIQUE (config_set, config_key)\n);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        816,
+        224
+      ],
+      "id": "b84c0574-8db1-432f-984c-fe59876fa988",
+      "name": "Execute a SQL query",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "credentials": {
+        "postgres": {
+          "id": "9qhK76P6xoSLgyrj",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const result = [];\n\nfor (const item of $input.all()) {\n  // Derive config_set from the filename passed in upstream\n  const fileName  = item.json.name ?? 'unknown';\n  const configSet = fileName.replace(/\\.json$/i, '');\n\n  // The parsed JSON object — adjust the field name if yours differs\n  const payload = item.json.fileContent ?? item.json;\n\n  for (const [key, value] of Object.entries(payload)) {\n    // Skip meta fields injected by upstream nodes\n    if (['name','fileName', 'filePath'].includes(key)) continue;\n\n    result.push({\n      json: {\n        config_set:   configSet,\n        config_key:   key,\n        config_value: String(value),\n        updated_at:   new Date().toISOString(),\n      }\n    });\n  }\n}\n\nreturn result;"
+      },
+      "id": "1a316422-7942-4636-8014-52e2eef4d1c2",
+      "name": "Parse & Flatten Key-Value Pairs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        656,
+        416
+      ],
+      "notes": "Converts each JSON file into individual rows: one row per key-value pair. The filename (without .json) becomes the config_set identifier."
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        992,
+        400
+      ],
+      "id": "7f1dcac1-f7bd-4c3e-b302-b562c26dd1bf",
+      "name": "Merge"
+    }
+  ],
+  "connections": {
+    "Upsert to PostgreSQL": {
+      "main": [
+        []
+      ]
+    },
+    "List files from repo": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set GitHub Details": {
+      "main": [
+        [
+          {
+            "node": "List files from repo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'WF-config'": {
+      "main": [
+        [
+          {
+            "node": "Set GitHub Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Call 'WF-config'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub": {
+      "main": [
+        [
+          {
+            "node": "Decode to json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decode to json": {
+      "main": [
+        [
+          {
+            "node": "Parse & Flatten Key-Value Pairs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse & Flatten Key-Value Pairs": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Upsert to PostgreSQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "3c76eb98-2fa0-42b0-986f-3d1a146a4cf7",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-06-05T12:24:03.270Z",
+      "createdAt": "2026-06-05T12:24:03.270Z",
+      "role": "workflow:owner",
+      "workflowId": "FjzDZrcWwKC3x4zj",
+      "projectId": "n7vWRCER8LLsWmld"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}

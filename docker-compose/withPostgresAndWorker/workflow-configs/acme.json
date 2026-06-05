@@ -4,8 +4,6 @@
   "apiKeyEnvVar": "ACME_API_KEY",
   "smtpFrom": "noreply@acme.com",
   "webhookSecret": "acme-webhook-secret-ref",
-  "featureFlags": {
-    "invoicingEnabled": true,
-    "slackNotifications": false
-  }
+  "invoicingEnabled": true,
+  "slackNotifications": false
 }

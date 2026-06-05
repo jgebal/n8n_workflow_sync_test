@@ -7,8 +7,6 @@
   "github_repo_name": "n8n_workflow_sync_test",
   "repo_workflows_path": "n8n-workflows/workflows",
   "webhookSecret": "jacek-webhook-secret-ref",
-  "featureFlags": {
-    "invoicingEnabled": true,
-    "slackNotifications": false
-  }
+  "invoicingEnabled": true,
+  "slackNotifications": false
 }

@@ -1,0 +1,110 @@
+{
+  "updatedAt": "2026-06-05T13:40:09.911Z",
+  "createdAt": "2026-06-05T08:24:05.986Z",
+  "id": "zyVp53gZcsQvjbDu",
+  "name": "get-config",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "CustomerName"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b37e037f-eb8b-4271-9856-bf13d2b33b1b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT json_object_agg(config_key, config_value) AS config\nFROM   config_parameters\nWHERE  config_set = '{{ $json.CustomerName }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        192,
+        0
+      ],
+      "id": "2b799a87-1ca5-4a57-8f95-ab68cc13a03c",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "postgres": {
+          "id": "9qhK76P6xoSLgyrj",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return  $input.first().json.config;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        0
+      ],
+      "id": "26978a2f-e001-4d36-a757-3d12465269e4",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "7ecfd5de-0c3c-483f-8a78-3d32542451a8",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-06-05T08:24:05.986Z",
+      "createdAt": "2026-06-05T08:24:05.986Z",
+      "role": "workflow:owner",
+      "workflowId": "zyVp53gZcsQvjbDu",
+      "projectId": "n7vWRCER8LLsWmld"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}

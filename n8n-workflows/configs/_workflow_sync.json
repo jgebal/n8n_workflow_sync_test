@@ -3,9 +3,8 @@
   "github_repo_name": "n8n_workflow_sync_test",
   "repo_workflows_path": "n8n-workflows/workflows",
   "repo_configs_path": "n8n-workflows/configs",
-  "webhookSecret": "jacek-webhook-secret-ref",
-  "featureFlags": {
-    "invoicingEnabled": true,
-    "slackNotifications": false
-  }
+  "ado_organization": "smenso",
+  "ado_project": "N8N",
+  "ado_repo_name": "N8N-workflows",
+  "repo_workflows_path": "n8n-workflows/workflows"
 }

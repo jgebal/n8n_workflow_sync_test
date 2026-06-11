@@ -1,14 +1,11 @@
 {
-  "displayName": "Jacek Gebal",
-  "apiUrl": "https://api.jacek.com",
   "apiKeyEnvVar": "JACEK_API_KEY",
   "smtpFrom": "noreply@jacek.gebal",
   "github_account_name": "jgebal",
   "github_repo_name": "n8n_workflow_sync_test",
   "repo_workflows_path": "n8n-workflows/workflows",
-  "webhookSecret": "jacek-webhook-secret-ref",
-  "featureFlags": {
-    "invoicingEnabled": true,
-    "slackNotifications": false
-  }
+  "ado_organization": "smenso",
+  "ado_project": "N8N",
+  "ado_repo_name": "N8N-workflows",
+  "repo_workflows_path": "n8n-workflows/workflows"
 }

@@ -1,8 +1,0 @@
-{
-  "apiKeyEnvVar": "ACME_API_KEY",
-  "apiUrl": "https://api.acme.com",
-  "displayName": "Acme Corp",
-  "featureFlags": "[object Object]",
-  "smtpFrom": "noreply@acme.com",
-  "webhookSecret": "acme-webhook-secret-ref"
-}

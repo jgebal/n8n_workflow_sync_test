@@ -1,0 +1,106 @@
+{
+  "updatedAt": "2026-06-11T09:13:52.762Z",
+  "createdAt": "2026-06-05T08:44:41.084Z",
+  "id": "QAqf72lf2ARTnXYD",
+  "name": "Test",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "382dcd3f-bfab-4758-ac56-1da99f532ea5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "zyVp53gZcsQvjbDu",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/zyVp53gZcsQvjbDu",
+          "cachedResultName": "get-config"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CustomerName": "={{ $json.CustomerName }}"
+          },
+          "matchingColumns": [
+            "CustomerName"
+          ],
+          "schema": [
+            {
+              "id": "CustomerName",
+              "displayName": "CustomerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "aee5a6c4-e580-4536-a258-a877985036c8",
+      "name": "Call 'WF-config'"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Call 'WF-config'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {
+          "CustomerName": "acme"
+        }
+      }
+    ]
+  },
+  "versionId": "60dd5582-ca16-4a12-894c-e99a26b985c7",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-06-05T08:44:41.084Z",
+      "createdAt": "2026-06-05T08:44:41.084Z",
+      "role": "workflow:owner",
+      "workflowId": "QAqf72lf2ARTnXYD",
+      "projectId": "n7vWRCER8LLsWmld"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}

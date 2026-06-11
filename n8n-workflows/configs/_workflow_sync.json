@@ -6,5 +6,6 @@
   "ado_organization": "smenso",
   "ado_project": "N8N",
   "ado_repo_name": "N8N-workflows",
-  "repo_workflows_path": "n8n-workflows/workflows"
+  "ado_repo_workflows_path": "workflows",
+  "ado_repo_configs_path": "configs"
 }

@@ -1,9 +1,0 @@
-{
-  "displayName": "Acme Corp",
-  "apiUrl": "https://api.acme.com",
-  "apiKeyEnvVar": "ACME_API_KEY",
-  "smtpFrom": "noreply@acme.com",
-  "webhookSecret": "acme-webhook-secret-ref",
-  "invoicingEnabled": true,
-  "slackNotifications": false
-}
